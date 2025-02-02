@@ -10,10 +10,10 @@ const userSchema = new mongoose.Schema({
         unique:true,
         required:true
     },
-    age:{
-        type:Number,
-        required:true
-    }
+    post: {
+        type: String,
+        required: true
+      }
 })
 
 const user = mongoose.model("user",userSchema)

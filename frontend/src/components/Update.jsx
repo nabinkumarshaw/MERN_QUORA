@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Update = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [age, setAge] = useState(0);
+    const [post, setPost] = useState('');
     const [error, setError] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Update = () => {
                 setError('');
                 setName(result.name);
                 setEmail(result.email);
-                setAge(result.age);
+                setPost(result.post || ''); // Ensure post is a string
             }
         } catch (err) {
             console.error('Error fetching user:', err);
@@ -31,7 +31,7 @@ const Update = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
 
-        const updatedUser = { name, email, age };
+        const updatedUser = { name, email, post }; // Update with post message
 
         try {
             const response = await fetch(`http://localhost:5000/${id}`, {
@@ -85,12 +85,11 @@ const Update = () => {
                     <div className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Age</label>
-                    <input
-                        type="number"
+                    <label className="form-label">Post</label>
+                    <textarea
                         className="form-control"
-                        value={age}
-                        onChange={(e) => setAge(Number(e.target.value) || 0)}
+                        value={post}
+                        onChange={(e) => setPost(e.target.value)} // Use textarea for multi-line input
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">
